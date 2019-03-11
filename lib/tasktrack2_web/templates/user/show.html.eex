@@ -14,10 +14,34 @@
       <th scope="row">
         Admin
       </th>
+      
       <td>
-        <%= @user.admin %>
+        <%= if @user.admin do %>
+          👍
+        <% else %>
+          👎
+        <% end %>
       </td>
     </tr>
+    <%= if @user.manager do %>
+      <tr>
+        <th scope="row">
+          Manager
+        </th>
+        <td>
+          <%= link @user.manager.name, to: Routes.user_path(@conn, :show, @user.manager.id) %>
+        </td>
+      </tr>
+    <% end %>
+    <%= if length(@user.underlings) > 0 do %>
+      <ul>
+        <%= for underling <- @user.underlings do %>
+          <li>
+            <%= link @underling.name, to: Routes.user_path(@conn, :show, @underling.id) %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
   </tbody>
 </table>
 

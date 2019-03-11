@@ -36,12 +36,16 @@ defmodule Tasktrack2.Users do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    Repo.get!(User, id)
+    |> Repo.preload(:manager)
+    # |> Repo.preload(:underlings)
+  end
 
   def get_user(id) do
     Repo.one from u in User,
       where: u.id == ^id,
-      preload: [:tasks]
+      preload: [:tasks, :manager]
   end
 
   def get_user_names() do

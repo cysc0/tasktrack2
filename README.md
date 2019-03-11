@@ -50,3 +50,6 @@ be found at [https://hexdocs.pm/tasktrack2](https://hexdocs.pm/tasktrack2).
   The My Tasks page is the same as the Tasks page, but it filters tasks
   for the currently signed in user. This route is disabled if there is no
   active user session.
+
+TODO:
+on_delete for managers and underlings is def wrong

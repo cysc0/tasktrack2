@@ -1,7 +1,7 @@
-defmodule TasktrackWeb.UserControllerTest do
-  use TasktrackWeb.ConnCase
+defmodule Tasktrack2Web.UserControllerTest do
+  use Tasktrack2Web.ConnCase
 
-  alias Tasktrack.Users
+  alias Tasktrack2.Users
 
   @create_attrs %{name: "some name"}
   @update_attrs %{name: "some updated name"}

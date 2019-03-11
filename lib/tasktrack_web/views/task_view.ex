@@ -1,3 +1,3 @@
-defmodule TasktrackWeb.TaskView do
-  use TasktrackWeb, :view
+defmodule Tasktrack2Web.TaskView do
+  use Tasktrack2Web, :view
 end

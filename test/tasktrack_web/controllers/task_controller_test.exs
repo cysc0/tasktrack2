@@ -1,7 +1,7 @@
-defmodule TasktrackWeb.TaskControllerTest do
-  use TasktrackWeb.ConnCase
+defmodule Tasktrack2Web.TaskControllerTest do
+  use Tasktrack2Web.ConnCase
 
-  alias Tasktrack.Tasks
+  alias Tasktrack2.Tasks
 
   @create_attrs %{complete: true, description: "some description", duration: 42}
   @update_attrs %{complete: false, description: "some updated description", duration: 43}

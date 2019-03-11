@@ -25,7 +25,7 @@ use Mix.Releases.Config,
 get_secret = fn name ->
   # Secret generation hack by Nat Tuck for CS4550
   # This function is dedicated to the public domain.
-  base = Path.expand("~/.config/tasktrack")
+  base = Path.expand("~/.config/tasktrack2")
   File.mkdir_p!(base)
   path = Path.join(base, name)
   unless File.exists?(path) do
@@ -58,8 +58,8 @@ end
 # when running `mix release`, the first release in the file
 # will be used by default
 
-release :tasktrack do
-  set version: current_version(:tasktrack)
+release :tasktrack2 do
+  set version: current_version(:tasktrack2)
   set applications: [
     :runtime_tools
   ]

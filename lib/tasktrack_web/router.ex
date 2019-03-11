@@ -1,5 +1,5 @@
-defmodule TasktrackWeb.Router do
-    use TasktrackWeb, :router
+defmodule Tasktrack2Web.Router do
+    use Tasktrack2Web, :router
   
     pipeline :browser do
       plug :accepts, ["html"]
@@ -7,14 +7,14 @@ defmodule TasktrackWeb.Router do
       plug :fetch_flash
       plug :protect_from_forgery
       plug :put_secure_browser_headers
-      plug TasktrackWeb.Plugs.FetchSession
+      plug Tasktrack2Web.Plugs.FetchSession
     end
   
     pipeline :api do
       plug :accepts, ["json"]
     end
   
-    scope "/", TasktrackWeb do
+    scope "/", Tasktrack2Web do
       pipe_through :browser # Use the default browser stack
   
       get "/", PageController, :index
@@ -25,7 +25,7 @@ defmodule TasktrackWeb.Router do
     end
   
     # Other scopes may use custom stacks.
-    # scope "/api", TasktrackWeb do
+    # scope "/api", Tasktrack2Web do
     #   pipe_through :api
     # end
   end

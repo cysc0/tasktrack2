@@ -1,11 +1,11 @@
-defmodule Tasktrack.Users.User do
+defmodule Tasktrack2.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "users" do
     field :admin, :boolean, default: false
     field :name, :string
-    has_many :tasks, Tasktrack.Tasks.Task
+    has_many :tasks, Tasktrack2.Tasks.Task
 
     timestamps()
   end

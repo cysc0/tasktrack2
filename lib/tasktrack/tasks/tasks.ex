@@ -1,12 +1,12 @@
-defmodule Tasktrack.Tasks do
+defmodule Tasktrack2.Tasks do
   @moduledoc """
   The Tasks context.
   """
 
   import Ecto.Query, warn: false
-  alias Tasktrack.Repo
+  alias Tasktrack2.Repo
 
-  alias Tasktrack.Tasks.Task
+  alias Tasktrack2.Tasks.Task
 
   @doc """
   Returns the list of tasks.

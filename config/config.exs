@@ -5,24 +5,24 @@
 # is restricted to this project.
 use Mix.Config
 
-config :tasktrack, Tasktrack.Repo,
+config :tasktrack2, Tasktrack2.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "tasktrack_repo",
+  database: "tasktrack2_repo",
   username: "user",
   password: "pass",
   hostname: "localhost"
 
 
 # General application configuration
-config :tasktrack,
-  ecto_repos: [Tasktrack.Repo]
+config :tasktrack2,
+  ecto_repos: [Tasktrack2.Repo]
 
 # Configures the endpoint
-config :tasktrack, TasktrackWeb.Endpoint,
+config :tasktrack2, Tasktrack2Web.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "ec7ahe0xeipah9As0vahrieWaoh4shah3xohW7duoxoh2oomahshieshahjeisha",
-  render_errors: [view: TasktrackWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Tasktrack.PubSub,
+  render_errors: [view: Tasktrack2Web.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Tasktrack2.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger

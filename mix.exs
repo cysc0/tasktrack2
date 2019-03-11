@@ -1,9 +1,9 @@
-defmodule Tasktrack.MixProject do
+defmodule Tasktrack2.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :tasktrack,
+      app: :tasktrack2,
       version: "0.1.0",
       elixir: "~> 1.8",
       elixirc_paths: elixirc_paths(Mix.env),
@@ -19,7 +19,7 @@ defmodule Tasktrack.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Tasktrack.Application, []},
+      mod: {Tasktrack2.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

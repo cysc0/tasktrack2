@@ -1,10 +1,10 @@
-defmodule Tasktrack.TasksTest do
-  use Tasktrack.DataCase
+defmodule Tasktrack2.TasksTest do
+  use Tasktrack2.DataCase
 
-  alias Tasktrack.Tasks
+  alias Tasktrack2.Tasks
 
   describe "tasks" do
-    alias Tasktrack.Tasks.Task
+    alias Tasktrack2.Tasks.Task
 
     @valid_attrs %{assignedby: "some assignedby", assignedto: "some assignedto", complete: true, description: "some description", duration: 42}
     @update_attrs %{assignedby: "some updated assignedby", assignedto: "some updated assignedto", complete: false, description: "some updated description", duration: 43}
@@ -71,7 +71,7 @@ defmodule Tasktrack.TasksTest do
   end
 
   describe "tasks" do
-    alias Tasktrack.Tasks.Task
+    alias Tasktrack2.Tasks.Task
 
     @valid_attrs %{complete: true, description: "some description", duration: 42}
     @update_attrs %{complete: false, description: "some updated description", duration: 43}

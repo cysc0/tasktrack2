@@ -1,10 +1,10 @@
-defmodule Tasktrack.UsersTest do
-  use Tasktrack.DataCase
+defmodule Tasktrack2.UsersTest do
+  use Tasktrack2.DataCase
 
-  alias Tasktrack.Users
+  alias Tasktrack2.Users
 
   describe "users" do
-    alias Tasktrack.Users.User
+    alias Tasktrack2.Users.User
 
     @valid_attrs %{name: "some name"}
     @update_attrs %{name: "some updated name"}

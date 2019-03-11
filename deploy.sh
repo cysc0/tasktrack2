@@ -18,4 +18,4 @@ mix release
 
 echo "Starting app..."
 
-_build/prod/rel/tasktrack/bin/tasktrack foreground
+_build/prod/rel/tasktrack2/bin/tasktrack2 foreground

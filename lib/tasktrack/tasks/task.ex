@@ -1,4 +1,4 @@
-defmodule Tasktrack.Tasks.Task do
+defmodule Tasktrack2.Tasks.Task do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,7 +7,7 @@ defmodule Tasktrack.Tasks.Task do
     field :title, :string, default: ""
     field :description, :string
     field :duration, :integer, default: 0
-    belongs_to :user, Tasktrack.Users.User
+    belongs_to :user, Tasktrack2.Users.User
     timestamps()
   end
 

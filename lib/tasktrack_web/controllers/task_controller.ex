@@ -1,9 +1,9 @@
-defmodule TasktrackWeb.TaskController do
-  use TasktrackWeb, :controller
+defmodule Tasktrack2Web.TaskController do
+  use Tasktrack2Web, :controller
 
-  alias Tasktrack.Tasks
-  alias Tasktrack.Tasks.Task
-  alias Tasktrack.Users
+  alias Tasktrack2.Tasks
+  alias Tasktrack2.Tasks.Task
+  alias Tasktrack2.Users
 
   def index(conn, _params) do
     tasks = Tasks.list_tasks()

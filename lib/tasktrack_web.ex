@@ -1,12 +1,12 @@
-defmodule TasktrackWeb do
+defmodule Tasktrack2Web do
     @moduledoc """
     The entrypoint for defining your web interface, such
     as controllers, views, channels and so on.
   
     This can be used in your application as:
   
-        use TasktrackWeb, :controller
-        use TasktrackWeb, :view
+        use Tasktrack2Web, :controller
+        use Tasktrack2Web, :view
   
     The definitions below will be executed for every view,
     controller, etc, so keep them short and clean, focused
@@ -19,18 +19,18 @@ defmodule TasktrackWeb do
   
     def controller do
       quote do
-        use Phoenix.Controller, namespace: TasktrackWeb
+        use Phoenix.Controller, namespace: Tasktrack2Web
   
         import Plug.Conn
-        import TasktrackWeb.Gettext
-        alias TasktrackWeb.Router.Helpers, as: Routes
+        import Tasktrack2Web.Gettext
+        alias Tasktrack2Web.Router.Helpers, as: Routes
       end
     end
   
     def view do
       quote do
-        use Phoenix.View, root: "lib/tasktrack_web/templates",
-                          namespace: TasktrackWeb
+        use Phoenix.View, root: "lib/tasktrack2_web/templates",
+                          namespace: Tasktrack2Web
   
         # Import convenience functions from controllers
         import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
@@ -38,9 +38,9 @@ defmodule TasktrackWeb do
         # Use all HTML functionality (forms, tags, etc)
         use Phoenix.HTML
   
-        import TasktrackWeb.ErrorHelpers
-        import TasktrackWeb.Gettext
-        alias TasktrackWeb.Router.Helpers, as: Routes
+        import Tasktrack2Web.ErrorHelpers
+        import Tasktrack2Web.Gettext
+        alias Tasktrack2Web.Router.Helpers, as: Routes
       end
     end
   
@@ -55,7 +55,7 @@ defmodule TasktrackWeb do
     def channel do
       quote do
         use Phoenix.Channel
-        import TasktrackWeb.Gettext
+        import Tasktrack2Web.Gettext
       end
     end
   

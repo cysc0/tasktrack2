@@ -1,8 +1,8 @@
-defmodule TasktrackWeb.SessionController do
-    use TasktrackWeb, :controller
+defmodule Tasktrack2Web.SessionController do
+    use Tasktrack2Web, :controller
 
     def create(conn, %{"name" => name}) do
-      user = Tasktrack.Users.get_user_by_name(name)
+      user = Tasktrack2.Users.get_user_by_name(name)
       if user do
         conn
         |> put_session(:user_id, user.id)

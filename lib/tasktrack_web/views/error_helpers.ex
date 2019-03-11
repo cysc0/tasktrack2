@@ -1,4 +1,4 @@
-defmodule TasktrackWeb.ErrorHelpers do
+defmodule Tasktrack2Web.ErrorHelpers do
     @moduledoc """
     Conveniences for translating and building error messages.
     """
@@ -36,9 +36,9 @@ defmodule TasktrackWeb.ErrorHelpers do
       # should be written to the errors.po file. The :count option is
       # set by Ecto and indicates we should also apply plural rules.
       if count = opts[:count] do
-        Gettext.dngettext(TasktrackWeb.Gettext, "errors", msg, msg, count, opts)
+        Gettext.dngettext(Tasktrack2Web.Gettext, "errors", msg, msg, count, opts)
       else
-        Gettext.dgettext(TasktrackWeb.Gettext, "errors", msg, opts)
+        Gettext.dgettext(Tasktrack2Web.Gettext, "errors", msg, opts)
       end
     end
   end

@@ -1,7 +1,7 @@
-defmodule TasktrackWeb.Endpoint do
-    use Phoenix.Endpoint, otp_app: :tasktrack
+defmodule Tasktrack2Web.Endpoint do
+    use Phoenix.Endpoint, otp_app: :tasktrack2
   
-    socket "/socket", TasktrackWeb.UserSocket,
+    socket "/socket", Tasktrack2Web.UserSocket,
       websocket: true,
       longpoll: false
   
@@ -10,7 +10,7 @@ defmodule TasktrackWeb.Endpoint do
     # You should set gzip to true if you are running phoenix.digest
     # when deploying your static files in production.
     plug Plug.Static,
-      at: "/", from: :tasktrack, gzip: false,
+      at: "/", from: :tasktrack2, gzip: false,
       only: ~w(css fonts images js favicon.ico robots.txt)
   
     # Code reloading can be explicitly enabled under the
@@ -37,9 +37,9 @@ defmodule TasktrackWeb.Endpoint do
     # Set :encryption_salt if you would also like to encrypt it.
     plug Plug.Session,
       store: :cookie,
-      key: "_tasktrack_key",
+      key: "_tasktrack2_key",
       signing_salt: "B534l+mp"
   
-    plug TasktrackWeb.Router
+    plug Tasktrack2Web.Router
   end
   

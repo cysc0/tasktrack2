@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :tasktrack, TasktrackWeb.Endpoint,
+config :tasktrack2, Tasktrack2Web.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -39,13 +39,13 @@ config :tasktrack, TasktrackWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :tasktrack, TasktrackWeb.Endpoint,
+config :tasktrack2, Tasktrack2Web.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
-      ~r{lib/tasktrack_web/views/.*(ex)$},
-      ~r{lib/tasktrack_web/templates/.*(eex)$}
+      ~r{lib/tasktrack2_web/views/.*(ex)$},
+      ~r{lib/tasktrack2_web/templates/.*(eex)$}
     ]
   ]
 
@@ -60,9 +60,9 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 # Configure your database
-config :tasktrack, Tasktrack.Repo,
-  username: "tasktrack",
+config :tasktrack2, Tasktrack2.Repo,
+  username: "tasktrack2",
   password: "rish8Oob0Een",
-  database: "tasktrack_dev",
+  database: "tasktrack2_dev",
   hostname: "localhost",
   pool_size: 10

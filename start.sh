@@ -3,9 +3,9 @@ export PORT=4794
 
 echo "Stopping old copy of app, if any..."
 
-_build/prod/rel/tasktrack/bin/tasktrack stop || true
+_build/prod/rel/tasktrack2/bin/tasktrack2 stop || true
 
 echo "Starting app..."
 
 # Foreground for testing and for systemd
-_build/prod/rel/tasktrack/bin/tasktrack foreground
+_build/prod/rel/tasktrack2/bin/tasktrack2 foreground

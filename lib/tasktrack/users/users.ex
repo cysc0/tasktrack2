@@ -1,13 +1,13 @@
-defmodule Tasktrack.Users do
+defmodule Tasktrack2.Users do
   @moduledoc """
   The Users context.
   """
 
   import Ecto.Query, warn: false
-  alias Tasktrack.Repo
+  alias Tasktrack2.Repo
 
-  alias Tasktrack.Users.User
-  alias Tasktrack.Tasks
+  alias Tasktrack2.Users.User
+  alias Tasktrack2.Tasks
 
   @doc """
   Returns the list of users.

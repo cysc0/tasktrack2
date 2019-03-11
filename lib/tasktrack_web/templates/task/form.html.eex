@@ -1,0 +1,67 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <table class="table table-striped table-bordered">
+    <tbody>
+      <tr class="form-group">
+        <th scope="row">
+          <%= label f, "Assign To" %>
+        </th>
+        <td id="table-content">
+          <%= select f, :user_id, assigns[:userList] %>
+          <%= error_tag f, :user_id %>
+        </td>
+      </tr>
+
+
+      <tr class="form-group">
+        <th scope="row">
+          <%= label f, "Title" %>
+        </th>
+        <td id="table-content">
+          <%= text_input f, :title, required: true, placeholder: "Enter a Task Title" %>
+          <%= error_tag f, :title %>
+        </td>
+      </tr>
+
+      <tr class="form-group">
+        <th scope="row">
+          <%= label f, :description %>
+        </th>
+        <td>
+          <%= textarea f, :description,  id: "task-description-entry", rows: "5", placeholder: "Describe this task", required: true %>
+          <%= error_tag f, :description %>
+        </td>
+      </tr>
+
+      <tr class="form-group">
+        <th scope="row">
+          <%= label f, :duration %>
+        </th>
+        <td>
+          <%= number_input f, :duration, min: 0, step: 15 %>
+          <%= error_tag f, :duration %>
+        </td>
+      </tr>
+
+      <%= if not String.equivalent?(@conn.request_path, "/tasks/new") do %>
+        <tr class="form-group">
+          <th scope="row">
+            <%= label f, :complete %>
+          </th>
+          <td>
+            <%= checkbox f, :complete, id: "task-checkbox" %>
+            <%= error_tag f, :complete %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+      
+<%= submit "Save", class: "btn btn-lg btn-block btn-success" %>
+
+<% end %>

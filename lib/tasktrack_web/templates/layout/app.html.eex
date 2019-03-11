@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tasktrack · Phoenix Framework</title>
+    <link rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/app.css") %>"/>
+    <%= if @current_user do %>
+      <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+          var element = document.getElementById("mytasks");
+          var destination = element.getAttribute("data");
+          element.href = "/mytasks/" + destination;
+        });
+      </script>
+    <% end %>
+
+  </head>
+  <body>
+    <div class="container" id="navbar">
+      <div>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white">
+          <div class="col-4" id="home-link">
+            <a class="navbar-brand" href="/">Tasktrack</a>
+          </div>
+          <div class="col" id="nav-tabs">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/tasks">Tasks</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/users">Users</a>
+              </li>
+              <li class="nav-item">
+                <%= if @current_user do %>
+                  <a id="mytasks" class="nav-link" href="/tasks" data=<%= @current_user.id %>>My Tasks</a>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+          <div class="col-4" id="session-info">
+            <%= if @current_user do %>
+              <div id="greeting">
+              Hi, <%= @current_user.name %>&nbsp;
+              </div>
+              <div>
+              <%= link("Logout", class: "btn btn-secondary", to: Routes.session_path(@conn, :delete),
+                method: :delete) %>
+              </div>
+            <% else %>
+              <%= form_for @conn, Routes.session_path(@conn, :create),
+                      [class: "form-inline"], fn f -> %>
+                <%= text_input f, :name, class: "form-control" %>
+                <%= submit "Login", class: "btn btn-success" %>
+              <% end %>
+            <% end %>
+          </div>
+        </nav>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <%= if get_flash(@conn, :info) do %>
+            <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+          <% end %>
+          <%= if get_flash(@conn, :error) do %>
+            <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+          <% end %>
+        </div>
+      </div>
+
+      <%= render @view_module, @view_template, assigns %>
+    </div>
+
+    <script type="text/javascript" src="<%= Routes.static_url(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>

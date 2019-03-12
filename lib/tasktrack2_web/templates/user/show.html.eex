@@ -33,7 +33,7 @@
         </td>
       </tr>
     <% end %>
-    <%= if length(@user.underlings) > 0 do %>
+    <%= if -1 > 0 do %>
       <ul>
         <%= for underling <- @user.underlings do %>
           <li>

@@ -6,8 +6,10 @@ defmodule Tasktrack2Web.TaskController do
   alias Tasktrack2.Users
 
   def index(conn, _params) do
+    IO.write("JREIOASJFIOSJFJIOJOInooooo")
     tasks = Tasks.list_tasks()
-    render(conn, "index.html", tasks: tasks)
+    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    render(conn, "index.html", tasks: tasks, is_manager: is_manager)
   end
 
   def new(conn, _params) do
@@ -35,11 +37,20 @@ defmodule Tasktrack2Web.TaskController do
     if String.equivalent?(curPath, "mytasks") do
       # if we are showing all of one's users tasks, generate many results
       tasks = Tasks.list_tasks_by_id(uid)
-      render(conn, "index.html", tasks: tasks)
+      is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+      render(conn, "index.html", tasks: tasks, is_manager: is_manager)
     else
-      # otherwise show a single task
-      task = Tasks.get_task!(id)
-      render(conn, "show.html", task: task)
+      # otherwise ...
+      if String.equivalent?(curPath, "taskreport") do
+        # if task report page
+        tasks = Tasks.list_tasks_by_manager_id(uid)
+        is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+        render(conn, "index.html", tasks: tasks, is_manager: is_manager)
+      else
+        # otherwise show a single task
+        task = Tasks.get_task!(id)
+        render(conn, "show.html", task: task)
+      end
     end
   end
 

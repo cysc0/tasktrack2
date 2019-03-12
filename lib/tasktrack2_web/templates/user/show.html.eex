@@ -33,14 +33,19 @@
         </td>
       </tr>
     <% end %>
-    <%= if -1 > 0 do %>
-      <ul>
-        <%= for underling <- @user.underlings do %>
-          <li>
-            <%= link @underling.name, to: Routes.user_path(@conn, :show, @underling.id) %>
-          </li>
-        <% end %>
-      </ul>
+    <%= if length(@underlings) > 0 do %>
+      <tr>
+        <th scope="row">
+          Team Members
+        </th>
+        <td>
+          <ul id="underlinglist">
+            <%= for underling <- @underlings do %>
+              <li><%= link underling.name, to: Routes.user_path(@conn, :show, underling.id) %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
     <% end %>
   </tbody>
 </table>

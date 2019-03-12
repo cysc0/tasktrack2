@@ -7,6 +7,7 @@ defmodule Tasktrack2.Tasks do
   alias Tasktrack2.Repo
 
   alias Tasktrack2.Tasks.Task
+  alias Tasktrack2.Users.User
 
   @doc """
   Returns the list of tasks.
@@ -32,6 +33,22 @@ defmodule Tasktrack2.Tasks do
             where: t.user_id == ^id
     Repo.all(query)
     |> Repo.preload(:user)
+  end
+
+  def list_tasks_by_manager_id(id) do
+    query = from u in User,
+      where: u.manager_id == ^id,
+      select: u.id
+    userIds = Repo.all(query)
+    IO.inspect(userIds)
+    IO.write("^^^^^^^^^^^^^\n")
+    IO.write("^^^^^^^^^^^^^\n")
+    IO.write("^^^^^^^^^^^^^\n")
+    IO.write("^^^^^^^^^^^^^\n")
+    IO.write("^^^^^^^^^^^^^\n")
+    IO.write("^^^^^^^^^^^^^\n")
+    IO.write("^^^^^^^^^^^^^\n")
+    []
   end
 
   @doc """

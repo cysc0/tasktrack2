@@ -6,7 +6,8 @@ defmodule Tasktrack2Web.UserController do
 
   def index(conn, _params) do
     users = Users.list_users()
-    render(conn, "index.html", users: users)
+    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    render(conn, "index.html", users: users, is_manager: is_manager)
   end
 
   def new(conn, _params) do
@@ -36,7 +37,9 @@ defmodule Tasktrack2Web.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Users.get_user!(id)
-    render(conn, "show.html", user: user)
+    underlings = Users.get_underlings(id)
+    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    render(conn, "show.html", user: user, underlings: underlings, is_manager: is_manager)
   end
 
   def edit(conn, %{"id" => id}) do

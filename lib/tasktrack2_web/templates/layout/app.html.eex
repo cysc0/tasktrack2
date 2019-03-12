@@ -10,8 +10,11 @@
       <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
           var element = document.getElementById("mytasks");
+          var element2 = document.getElementById("taskreport");
           var destination = element.getAttribute("data");
+          var destination2 = element2.getAttribute("data");
           element.href = "/mytasks/" + destination;
+          element2.href = "/taskreport/" + destination2;
         });
       </script>
     <% end %>
@@ -32,11 +35,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="/users">Users</a>
               </li>
-              <li class="nav-item">
-                <%= if @current_user do %>
+              <%= if @current_user do %>
+                <li class="nav-item">
                   <a id="mytasks" class="nav-link" href="/tasks" data=<%= @current_user.id %>>My Tasks</a>
+                </li>
+                <%= if @is_manager do %>
+                  <li class="nav-item">
+                    <a id="taskreport" class="nav-link" href="/tasks" data=<%= @current_user.id %>>Task Report</a>
+                  </li>
                 <% end %>
-              </li>
+              <% end %>
             </ul>
           </div>
           <div class="col-4" id="session-info">

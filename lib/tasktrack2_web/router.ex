@@ -20,6 +20,7 @@ defmodule Tasktrack2Web.Router do
       get "/", PageController, :index
       resources "/tasks", TaskController
       resources "/mytasks", TaskController
+      resources "/taskreport", TaskController
       resources "/users", UserController
       resources "/sessions", SessionController, only: [:create, :delete], singleton: true
     end

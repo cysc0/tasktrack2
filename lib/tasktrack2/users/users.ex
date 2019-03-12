@@ -59,6 +59,23 @@ defmodule Tasktrack2.Users do
     Repo.get_by(User, name: name)
   end
 
+  def is_manager(id) do
+    if id === nil do
+      false
+    else
+      query = from u in User,
+        where: u.manager_id == ^id,
+        preload: [:tasks, :manager]
+      length(Repo.all(query)) > 0
+    end
+  end
+
+  def get_underlings(id) do
+    Repo.all from u in User,
+      where: u.manager_id == ^id,
+      preload: [:tasks, :manager]
+  end
+
   @doc """
   Creates a user.
 

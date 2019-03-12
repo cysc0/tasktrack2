@@ -6,29 +6,30 @@ defmodule Tasktrack2Web.TaskController do
   alias Tasktrack2.Users
 
   def index(conn, _params) do
-    IO.write("JREIOASJFIOSJFJIOJOInooooo")
     tasks = Tasks.list_tasks()
     is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
     render(conn, "index.html", tasks: tasks, is_manager: is_manager)
   end
 
   def new(conn, _params) do
-    userList = Users.get_user_names()
+    uid = Map.get(conn.private.plug_session, "user_id")
+    userList = [Users.get_user!(uid).name] ++ Users.get_underlings_names(uid)
     changeset = Tasks.change_task(%Task{})
     is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
     render(conn, "new.html", changeset: changeset, userList: userList, is_manager: is_manager)
   end
 
   def create(conn, %{"task" => task_params}) do
+    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
     task_params = Map.replace(task_params, "user_id", Integer.to_string(Users.get_user_by_name(Map.get(task_params, "user_id")).id))
     case Tasks.create_task(task_params) do
       {:ok, task} ->
         conn
         |> put_flash(:info, "Task created successfully.")
-        |> redirect(to: Routes.task_path(conn, :show, task))
+        |> redirect(to: Routes.task_path(conn, :show, task, is_manager: is_manager))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, is_manager: is_manager)
     end
   end
 
@@ -55,16 +56,19 @@ defmodule Tasktrack2Web.TaskController do
   end
 
   def edit(conn, %{"id" => id}) do
-    userList = Users.get_user_names()
+    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    uid = Map.get(conn.private.plug_session, "user_id")
+    userList = [Users.get_user!(uid).name] ++ Users.get_underlings_names(uid)
     task = Tasks.get_task!(id)
     changeset = Tasks.change_task(task)
-    render(conn, "edit.html", task: task, changeset: changeset, userList: userList)
+    render(conn, "edit.html", task: task, changeset: changeset, userList: userList, is_manager: is_manager)
   end
 
   def update(conn, %{"id" => id, "task" => task_params}) do
     {taskNum, _} = Integer.parse(id)
     task = Tasks.get_task!(taskNum)
-    userList = Users.get_user_names()
+    uid = Map.get(conn.private.plug_session, "user_id")
+    userList = [Users.get_user!(uid).name] ++ Users.get_underlings_names(uid)
     task_params = Map.replace(task_params, "user_id", Integer.to_string(Users.get_user_by_name(Map.get(task_params, "user_id")).id))
     case Tasks.update_task(task, task_params) do
       {:ok, task} ->

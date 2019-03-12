@@ -15,7 +15,7 @@ defmodule Tasktrack2.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :admin])
+    |> cast(attrs, [:name, :admin, :manager_id])
     |> validate_required([:name, :admin])
   end
 end

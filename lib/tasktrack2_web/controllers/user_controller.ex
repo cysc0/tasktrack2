@@ -11,8 +11,11 @@ defmodule Tasktrack2Web.UserController do
   end
 
   def new(conn, _params) do
+    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    userId = Map.get(conn.private.plug_session, "user_id")
+    userList = [nil] ++ Users.get_other_user_names(userId)
     changeset = Users.change_user(%User{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", is_manager: is_manager, changeset: changeset, userList: userList)
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -44,21 +47,40 @@ defmodule Tasktrack2Web.UserController do
 
   def edit(conn, %{"id" => id}) do
     user = Users.get_user!(id)
+    userList = [nil] ++ Users.get_other_user_names(id)
     changeset = Users.change_user(user)
-    render(conn, "edit.html", user: user, changeset: changeset)
+    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    render(conn, "edit.html", user: user, is_manager: is_manager, userList: userList, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
+    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    userList = [nil] ++ Users.get_other_user_names(id)
     user = Users.get_user!(id)
-
-    case Users.update_user(user, user_params) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: Routes.user_path(conn, :show, user))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", user: user, changeset: changeset)
+    manager = Users.get_user_by_name(Map.get(user_params, "manager_id"))
+    
+    if manager == nil do
+      # if we are removing a manager
+      case Users.update_user(user, user_params) do
+        {:ok, user} ->
+          conn
+          |> put_flash(:info, "User updated successfully.")
+          |> redirect(to: Routes.user_path(conn, :show, user, is_manager: is_manager))
+  
+        {:error, %Ecto.Changeset{} = changeset} ->
+          render(conn, "edit.html", user: user, changeset: changeset, is_manager: is_manager, userList: userList)
+      end
+    else
+      # if we are adding/changing manager
+      case Users.update_user(user, Map.put(user_params, "manager_id", manager.id)) do
+        {:ok, user} ->
+          conn
+          |> put_flash(:info, "User updated successfully.")
+          |> redirect(to: Routes.user_path(conn, :show, user, is_manager: is_manager))
+  
+        {:error, %Ecto.Changeset{} = changeset} ->
+          render(conn, "edit.html", user: user, changeset: changeset, is_manager: is_manager, userList: userList)
+      end
     end
   end
 

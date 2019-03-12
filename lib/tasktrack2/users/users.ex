@@ -55,8 +55,20 @@ defmodule Tasktrack2.Users do
     Repo.all(query)
   end
 
+  def get_other_user_names(id) do
+    # get usernames that don't match input id
+    query = from u in User,
+            select: u.name,
+            where: u.id != ^id
+    Repo.all(query)
+  end
+
   def get_user_by_name(name) do
-    Repo.get_by(User, name: name)
+    if name === nil do
+      nil
+    else
+      Repo.get_by(User, name: name)
+    end
   end
 
   def is_manager(id) do
@@ -74,6 +86,12 @@ defmodule Tasktrack2.Users do
     Repo.all from u in User,
       where: u.manager_id == ^id,
       preload: [:tasks, :manager]
+  end
+
+  def get_underlings_names(id) do
+    Repo.all from u in User,
+      where: u.manager_id == ^id,
+      select: u.name
   end
 
   @doc """

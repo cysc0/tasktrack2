@@ -15,7 +15,8 @@ defmodule Tasktrack2Web.TaskController do
   def new(conn, _params) do
     userList = Users.get_user_names()
     changeset = Tasks.change_task(%Task{})
-    render(conn, "new.html", changeset: changeset, userList: userList)
+    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    render(conn, "new.html", changeset: changeset, userList: userList, is_manager: is_manager)
   end
 
   def create(conn, %{"task" => task_params}) do
@@ -34,22 +35,21 @@ defmodule Tasktrack2Web.TaskController do
   def show(conn, %{"id" => id}) do
     {curPath, _} = List.pop_at(String.split(conn.request_path, "/"), 1)
     {uid, _} = Integer.parse(id)
+    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
     if String.equivalent?(curPath, "mytasks") do
       # if we are showing all of one's users tasks, generate many results
       tasks = Tasks.list_tasks_by_id(uid)
-      is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
       render(conn, "index.html", tasks: tasks, is_manager: is_manager)
     else
       # otherwise ...
       if String.equivalent?(curPath, "taskreport") do
         # if task report page
         tasks = Tasks.list_tasks_by_manager_id(uid)
-        is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
         render(conn, "index.html", tasks: tasks, is_manager: is_manager)
       else
         # otherwise show a single task
         task = Tasks.get_task!(id)
-        render(conn, "show.html", task: task)
+        render(conn, "show.html", task: task, is_manager: is_manager)
       end
     end
   end

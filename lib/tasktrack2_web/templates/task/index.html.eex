@@ -36,7 +36,7 @@
         <td>
           <%= link task.title, to: Routes.task_path(@conn, :show, task) %>
         </td>
-        <%= if String.equivalent?(@conn.request_path, "/tasks") or String.equivalent?(@conn.request_path, "/taskreport") do %>
+        <%= if String.equivalent?(@conn.request_path, "/tasks") or String.contains?(@conn.request_path, "/taskreport") do %>
           <td>
             <%= link task.user.name, to: Routes.user_path(@conn, :show, task.user) %>
           </td>

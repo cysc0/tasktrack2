@@ -29,10 +29,19 @@ defmodule Tasktrack2.Tasks do
   end
 
   def list_tasks_by_id(id) do
+    # get tasks matching a single user id
     query = from t in Task,
             where: t.user_id == ^id
     Repo.all(query)
     |> Repo.preload(:user)
+  end
+
+  def list_tasks_by_multi_id(idList) do
+    # get tasks matching a list of user ids
+    query = from t in Task,
+      where: t.user_id in ^idList,
+      preload: :user
+    Repo.all(query)
   end
 
   def list_tasks_by_manager_id(id) do
@@ -40,15 +49,7 @@ defmodule Tasktrack2.Tasks do
       where: u.manager_id == ^id,
       select: u.id
     userIds = Repo.all(query)
-    IO.inspect(userIds)
-    IO.write("^^^^^^^^^^^^^\n")
-    IO.write("^^^^^^^^^^^^^\n")
-    IO.write("^^^^^^^^^^^^^\n")
-    IO.write("^^^^^^^^^^^^^\n")
-    IO.write("^^^^^^^^^^^^^\n")
-    IO.write("^^^^^^^^^^^^^\n")
-    IO.write("^^^^^^^^^^^^^\n")
-    []
+    list_tasks_by_multi_id(userIds)
   end
 
   @doc """

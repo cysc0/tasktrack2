@@ -52,4 +52,3 @@ be found at [https://hexdocs.pm/tasktrack2](https://hexdocs.pm/tasktrack2).
   active user session.
 
 TODO:
-on_delete for managers and underlings is def wrong

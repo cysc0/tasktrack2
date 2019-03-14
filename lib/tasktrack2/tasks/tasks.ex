@@ -21,11 +21,13 @@ defmodule Tasktrack2.Tasks do
   def list_tasks do
     Repo.all(Task)
     |> Repo.preload(:user)
+    |> Repo.preload(:timelogs)
   end
 
   def list_tasks_with_names do
     Repo.all(Task)
     |> Repo.preload(:user)
+    |> Repo.preload(:timelogs)
   end
 
   def list_tasks_by_id(id) do
@@ -34,13 +36,14 @@ defmodule Tasktrack2.Tasks do
             where: t.user_id == ^id
     Repo.all(query)
     |> Repo.preload(:user)
+    |> Repo.preload(:timelogs)
   end
 
   def list_tasks_by_multi_id(idList) do
     # get tasks matching a list of user ids
     query = from t in Task,
       where: t.user_id in ^idList,
-      preload: :user
+      preload: [:user, :timelogs]
     Repo.all(query)
   end
 
@@ -69,6 +72,7 @@ defmodule Tasktrack2.Tasks do
   def get_task!(id) do
     Repo.get!(Task, id)
     |> Repo.preload(:user)
+    |> Repo.preload(:timelogs)
   end
 
   @doc """

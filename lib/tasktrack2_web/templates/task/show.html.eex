@@ -38,14 +38,20 @@
         <%= @task.description %>
       </td>
     </tr>
-    <tr>
-      <th scope="row">
-        Time Spent (minutes)
-      </th>
-      <td>
-        <%= @task.duration %>
-      </td>
-    </tr>
+    <%= if length(@task.timelogs) > 0 do %>
+      <tr>
+        <th scope="row">
+          Time Log
+        </th>
+        <td id="tasks-timelog">
+          <ul>
+            <%= for timelog <- @task.timelogs do %>
+              <li><%= timelog.timestamp %>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 

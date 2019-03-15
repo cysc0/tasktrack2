@@ -1,5 +1,5 @@
 export MIX_ENV=prod
-export PORT=4794
+export PORT=4795
 export NODEBIN='pwd'/assets/node_modules/.bin
 
 echo "Building..."

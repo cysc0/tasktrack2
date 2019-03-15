@@ -16,7 +16,7 @@ defmodule Tasktrack2Web.TaskController do
     userList = [Users.get_user!(uid).name] ++ Users.get_underlings_names(uid)
     changeset = Tasks.change_task(%Task{})
     is_manager = Users.is_manager(conn.assigns.current_user.id)
-    render(conn, "new.html", changeset: changeset, userList: userList, is_manager: is_manager)
+    render(conn, "new.html", changeset: changeset, userList: userList, is_manager: is_manager, task: nil)
   end
 
   def create(conn, %{"task" => task_params}) do

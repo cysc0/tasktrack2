@@ -1,3 +1,7 @@
+<script type="text/javascript">
+  window.timelog_path = "<%= Routes.timelog_path(@conn, :create) %>";
+</script>
+
 <h1>Show Task</h1>
 
 <table class="table table-striped table-bordered">
@@ -38,19 +42,41 @@
         <%= @task.description %>
       </td>
     </tr>
-    <tr>
-      <th scope="row">
-        Time Spent (minutes)
-      </th>
-      <td>
-        <%= @task.duration %>
-      </td>
-    </tr>
+    <%= if length(@task.timelogs) > 0 do %>
+      <tr>
+        <th scope="row">
+          Time Log
+        </th>
+        <td id="tasks-timelog">
+          <table class="table table-borderless">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+              </tr>
+            </thead>
+            <tbody>
+            <%= for timelog <- @task.timelogs do %>
+              <tr>
+                <td><%= String.slice(DateTime.to_string(timelog.timestart), 0..15) %></td>
+                <td><%= String.slice(DateTime.to_string(timelog.timeend), 0..15) %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 
 <%= if @current_user do %>
   <%= if @current_user.name == @task.user.name do %>
-    <span><%= link "Edit", class: "btn btn-lg btn-block btn-warning", to: Routes.task_path(@conn, :edit, @task) %></span>
+    <div>
+      <span><%= link "Edit", class: "btn btn-lg btn-block btn-warning", to: Routes.task_path(@conn, :edit, @task) %></span>
+    </div>
+    <div>
+      <button id="startwork" data-task-id="<%=@task.id%>" class="btn btn-lg btn-block btn-info">Start Working</button>
+    </div>
   <% end %>
 <% end %>

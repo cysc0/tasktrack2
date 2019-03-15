@@ -19,7 +19,6 @@
         <th scope="col">Who</th>
       <% end %>
       <th scope="col">Description</th>
-      <th scope="col">Time Spent (minutes)</th>
     </tr>
   </thead>
 
@@ -43,9 +42,6 @@
         <% end %>
         <td id="tasks-description">
           <%= task.description %>
-        </td>
-        <td>
-          <%= task.duration %>
         </td>
       </tr>
     <% end %>

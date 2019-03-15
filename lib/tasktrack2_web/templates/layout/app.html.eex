@@ -10,14 +10,22 @@
       <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function() {
           var element = document.getElementById("mytasks");
-          var element2 = document.getElementById("taskreport");
-          var destination = element.getAttribute("data");
-          var destination2 = element2.getAttribute("data");
-          element.href = "/mytasks/" + destination;
-          element2.href = "/taskreport/" + destination2;
+          if (element != null) {
+            var destination = element.getAttribute("data");
+            element.href = "/mytasks/" + destination;
+          }
         });
       </script>
     <% end %>
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function() {
+        var element2 = document.getElementById("taskreport");
+        if (element2 != null) {
+          var destination2 = element2.getAttribute("data");
+          element2.href = "/taskreport/" + destination2;
+        };
+      });
+    </script>
 
   </head>
   <body>

@@ -7,20 +7,20 @@ defmodule Tasktrack2Web.TaskController do
 
   def index(conn, _params) do
     tasks = Tasks.list_tasks()
-    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
+    is_manager = Users.is_manager(conn.assigns.current_user.id)
     render(conn, "index.html", tasks: tasks, is_manager: is_manager)
   end
 
   def new(conn, _params) do
-    uid = Map.get(conn.assigns.current_user.id, "user_id")
+    uid = conn.assigns.current_user.id
     userList = [Users.get_user!(uid).name] ++ Users.get_underlings_names(uid)
     changeset = Tasks.change_task(%Task{})
-    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
+    is_manager = Users.is_manager(conn.assigns.current_user.id)
     render(conn, "new.html", changeset: changeset, userList: userList, is_manager: is_manager)
   end
 
   def create(conn, %{"task" => task_params}) do
-    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
+    is_manager = Users.is_manager(conn.assigns.current_user.id)
     task_params = Map.replace(task_params, "user_id", Integer.to_string(Users.get_user_by_name(Map.get(task_params, "user_id")).id))
     case Tasks.create_task(task_params) do
       {:ok, task} ->
@@ -36,7 +36,7 @@ defmodule Tasktrack2Web.TaskController do
   def show(conn, %{"id" => id}) do
     {curPath, _} = List.pop_at(String.split(conn.request_path, "/"), 1)
     {uid, _} = Integer.parse(id)
-    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
+    is_manager = Users.is_manager(conn.assigns.current_user.id)
     if String.equivalent?(curPath, "mytasks") do
       # if we are showing all of one's users tasks, generate many results
       tasks = Tasks.list_tasks_by_id(uid)
@@ -56,8 +56,8 @@ defmodule Tasktrack2Web.TaskController do
   end
 
   def edit(conn, %{"id" => id}) do
-    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
-    uid = Map.get(conn.assigns.current_user.id, "user_id")
+    is_manager = Users.is_manager(conn.assigns.current_user.id)
+    uid = conn.assigns.current_user.id
     userList = [Users.get_user!(uid).name] ++ Users.get_underlings_names(uid)
     task = Tasks.get_task!(id)
     changeset = Tasks.change_task(task)
@@ -67,7 +67,7 @@ defmodule Tasktrack2Web.TaskController do
   def update(conn, %{"id" => id, "task" => task_params}) do
     {taskNum, _} = Integer.parse(id)
     task = Tasks.get_task!(taskNum)
-    uid = Map.get(conn.assigns.current_user.id, "user_id")
+    uid = conn.assigns.current_user.id
     userList = [Users.get_user!(uid).name] ++ Users.get_underlings_names(uid)
     task_params = Map.replace(task_params, "user_id", Integer.to_string(Users.get_user_by_name(Map.get(task_params, "user_id")).id))
     case Tasks.update_task(task, task_params) do

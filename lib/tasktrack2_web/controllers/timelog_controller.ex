@@ -16,7 +16,7 @@ defmodule Tasktrack2Web.TimelogController do
 
   def create(conn, %{"timelog" => timelog_params}) do
     curTask = Tasks.get_task!(Map.get(timelog_params, "task_id"))
-    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
+    is_manager = Users.is_manager(conn.assigns.current_user.id)
 
     timeend_year = String.to_integer(String.slice(Map.get(timelog_params, "timeend"), 0..3))
     timeend_mon = String.to_integer(String.slice(Map.get(timelog_params, "timeend"), 5..6))

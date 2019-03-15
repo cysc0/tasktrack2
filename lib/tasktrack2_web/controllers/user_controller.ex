@@ -6,13 +6,13 @@ defmodule Tasktrack2Web.UserController do
 
   def index(conn, _params) do
     users = Users.list_users()
-    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
     render(conn, "index.html", users: users, is_manager: is_manager)
   end
 
   def new(conn, _params) do
-    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
-    userId = Map.get(conn.private.plug_session, "user_id")
+    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
+    userId = Map.get(conn.assigns.current_user.id, "user_id")
     userList = [nil] ++ Users.get_other_user_names(userId)
     changeset = Users.change_user(%User{})
     render(conn, "new.html", is_manager: is_manager, changeset: changeset, userList: userList)
@@ -41,7 +41,7 @@ defmodule Tasktrack2Web.UserController do
   def show(conn, %{"id" => id}) do
     user = Users.get_user!(id)
     underlings = Users.get_underlings(id)
-    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
     render(conn, "show.html", user: user, underlings: underlings, is_manager: is_manager)
   end
 
@@ -49,12 +49,12 @@ defmodule Tasktrack2Web.UserController do
     user = Users.get_user!(id)
     userList = [nil] ++ Users.get_other_user_names(id)
     changeset = Users.change_user(user)
-    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
     render(conn, "edit.html", user: user, is_manager: is_manager, userList: userList, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
+    is_manager = Users.is_manager(Map.get(conn.assigns.current_user.id, "user_id"))
     userList = [nil] ++ Users.get_other_user_names(id)
     user = Users.get_user!(id)
     manager = Users.get_user_by_name(Map.get(user_params, "manager_id"))

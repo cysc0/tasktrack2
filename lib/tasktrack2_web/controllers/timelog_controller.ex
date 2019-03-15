@@ -15,7 +15,6 @@ defmodule Tasktrack2Web.TimelogController do
   end
 
   def create(conn, %{"timelog" => timelog_params}) do
-    IO.inspect(timelog_params);
     curTask = Tasks.get_task!(Map.get(timelog_params, "task_id"))
     is_manager = Users.is_manager(Map.get(conn.private.plug_session, "user_id"))
 

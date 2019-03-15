@@ -42,6 +42,7 @@
         </td>
       </tr>
 
+      <%= if @task != nil do %>
       <tr>
         <th scope="row">
           Timelog
@@ -56,7 +57,6 @@
               </tr>
             </thead>
             <tbody>
-            <%= if @task != nil do %>
               <%= for timelog <- @task.timelogs do %>
                 <tr>
                   <td id="timelog-start-<%=timelog.id%>"><%= DateTime.to_string(timelog.timestart) %></td>
@@ -71,11 +71,11 @@
                 <td><input id="timelog-new-timeend" type="datetime-local" value="2017-06-01T08:30"></td>
                 <td><button id="timelog-new" data-task-id="<%=@task.id%>" type="button" class="btn btn-success timelog-editbutton">Save</button></td>
               </tr>
-            <% end %>
             </tbody>
           </table>
         </td>
       </tr>
+      <% end %>
 
       <%= if not String.equivalent?(@conn.request_path, "/tasks/new") do %>
         <tr class="form-group">

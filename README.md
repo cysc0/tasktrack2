@@ -17,22 +17,9 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/tasktrack2](https://hexdocs.pm/tasktrack2).
 
-# Design Decisions etc.
-
-### Things I used JS for (3! lines total):
-  #### In page/index.html.eex:
-  If there is an active user session, any attempt to go to the home screen will
-  send the user to the main tasks page.
-
-  #### In app.html.eex:
-  I used a minimal amount of javascript to configure the My Tasks link
-  I did it this way because that route is dependent on there being an active
-  user session, so that behavior is hidden for non-signed in users
-  It prevents undefined behavior, and I think it's a reasonable design decision
-  since I feel that anyone (non-users) should be able to check up on
-  other people's tasks.
-
 ------
+
+# Design Decisions etc.
 
 ### User Info
   For non-admins, the user page only displays username and admin status
@@ -43,6 +30,11 @@ be found at [https://hexdocs.pm/tasktrack2](https://hexdocs.pm/tasktrack2).
   The user page displays all registered users, with each username
   serving as a link to that user's info.
 
+  A user is able to edit themselves, and choose who their manager is.
+
+  The Task Report link will only be showed to a user if they have
+  members signed up on their team (people they manage).
+
 ### Task Info
   The main task page displays all tasks for all users. Each task offers
   a link to the corresponding user's page, and a link to the corresponding task.
@@ -51,4 +43,13 @@ be found at [https://hexdocs.pm/tasktrack2](https://hexdocs.pm/tasktrack2).
   for the currently signed in user. This route is disabled if there is no
   active user session.
 
-TODO:
+  For timelogs, a user can create timelogs manually by editing a task
+  and entering a start and end time.
+
+  Timelogs can be deleted individually from the task edit page.
+
+  On the task show page, there is a start working button (if that task
+  belongs to the current user). When the user clicks start,
+  the current time will be saved, and when the user clicks the end button,
+  the current time will be saved. This data will be send to the DB,
+  and the page will be reloaded to reflect that new timelog.

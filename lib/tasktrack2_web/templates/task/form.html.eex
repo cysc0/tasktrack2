@@ -1,3 +1,7 @@
+<script type="text/javascript">
+  window.timelog_path = "<%= Routes.timelog_path(@conn, :create) %>";
+</script>
+
 <%= form_for @changeset, @action, fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -35,6 +39,39 @@
         <td>
           <%= textarea f, :description,  id: "task-description-entry", rows: "5", placeholder: "Describe this task", required: true %>
           <%= error_tag f, :description %>
+        </td>
+      </tr>
+
+      <tr>
+        <th scope="row">
+          Timelog
+        </th>
+        <td id="tasks-timelog">
+          <table class="table table-borderless">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            <%= for timelog <- @task.timelogs do %>
+              <tr>
+                <td id="timelog-start-<%=timelog.id%>"><%= DateTime.to_string(timelog.timestart) %></td>
+                <td id="timelog-end-<%=timelog.id%>"><%= DateTime.to_string(timelog.timeend) %></td>
+                <td>
+                  <%= link "Delete", class: "timelog-deletebutton btn btn-lg btn-danger btn-sm", to: Routes.timelog_path(@conn, :delete, timelog.id), method: :delete %>
+                </td>
+              </tr>
+            <% end %>
+            <tr>
+              <td><input id="timelog-new-timestart" type="datetime-local" value="2017-06-01T08:30"></td>
+              <td><input id="timelog-new-timeend" type="datetime-local" value="2017-06-01T08:30"></td>
+              <td><button id="timelog-new" data-task-id="<%=@task.id%>" type="button" class="btn btn-success timelog-editbutton">Save</button></td>
+            </tr>
+            </tbody>
+          </table>
         </td>
       </tr>
 

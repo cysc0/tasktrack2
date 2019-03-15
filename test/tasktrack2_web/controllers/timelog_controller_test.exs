@@ -5,12 +5,14 @@ defmodule Tasktrack2Web.TimelogControllerTest do
   alias Tasktrack2.Timelogs.Timelog
 
   @create_attrs %{
-    timestamp: "2010-04-17T14:00:00Z"
+    timeend: "2010-04-17T14:00:00Z",
+    timestart: "2010-04-17T14:00:00Z"
   }
   @update_attrs %{
-    timestamp: "2011-05-18T15:01:01Z"
+    timeend: "2011-05-18T15:01:01Z",
+    timestart: "2011-05-18T15:01:01Z"
   }
-  @invalid_attrs %{timestamp: nil}
+  @invalid_attrs %{timeend: nil, timestart: nil}
 
   def fixture(:timelog) do
     {:ok, timelog} = Timelogs.create_timelog(@create_attrs)
@@ -37,7 +39,8 @@ defmodule Tasktrack2Web.TimelogControllerTest do
 
       assert %{
                "id" => id,
-               "timestamp" => "2010-04-17T14:00:00Z"
+               "timeend" => "2010-04-17T14:00:00Z",
+               "timestart" => "2010-04-17T14:00:00Z"
              } = json_response(conn, 200)["data"]
     end
 
@@ -58,7 +61,8 @@ defmodule Tasktrack2Web.TimelogControllerTest do
 
       assert %{
                "id" => id,
-               "timestamp" => "2011-05-18T15:01:01Z"
+               "timeend" => "2011-05-18T15:01:01Z",
+               "timestart" => "2011-05-18T15:01:01Z"
              } = json_response(conn, 200)["data"]
     end
 

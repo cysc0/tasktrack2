@@ -12,6 +12,7 @@ defmodule Tasktrack2Web.TimelogView do
 
   def render("timelog.json", %{timelog: timelog}) do
     %{id: timelog.id,
-      timestamp: timelog.timestamp}
+      timestart: timelog.timestart,
+      timeend: timelog.timeend}
   end
 end

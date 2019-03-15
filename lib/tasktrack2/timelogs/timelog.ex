@@ -13,7 +13,7 @@ defmodule Tasktrack2.Timelogs.Timelog do
   @doc false
   def changeset(timelog, attrs) do
     timelog
-    |> cast(attrs, [:timestart, :timeend])
-    |> validate_required([:timestart, :timeend])
+    |> cast(attrs, [:timestart, :timeend, :task_id])
+    |> validate_required([:timestart, :timeend, :task_id])
   end
 end

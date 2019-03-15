@@ -3,7 +3,8 @@ defmodule Tasktrack2.Repo.Migrations.CreateTimelogs do
 
   def change do
     create table(:timelogs) do
-      add :timestamp, :utc_datetime
+      add :timestart, :utc_datetime
+      add :timeend, :utc_datetime
       add :task_id, references(:tasks, on_delete: :delete_all), null: false
 
       timestamps()

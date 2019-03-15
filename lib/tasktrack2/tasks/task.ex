@@ -6,7 +6,7 @@ defmodule Tasktrack2.Tasks.Task do
     field :complete, :boolean, default: false
     field :title, :string, default: ""
     field :description, :string
-    field :duration, :integer, default: 0
+    has_many :timelogs, Tasktrack2.Timelogs.Timelog
     belongs_to :user, Tasktrack2.Users.User
     timestamps()
   end
@@ -14,7 +14,7 @@ defmodule Tasktrack2.Tasks.Task do
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:complete, :title, :description, :duration, :user_id])
-    |> validate_required([:complete, :title, :description, :duration, :user_id])
+    |> cast(attrs, [:complete, :title, :description, :user_id])
+    |> validate_required([:complete, :title, :description, :user_id])
   end
 end

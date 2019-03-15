@@ -14,7 +14,7 @@ config :tasktrack2, Tasktrack2Web.Endpoint,
   root: ".",
   version: Application.spec(:phoenix_distillery, :vsn),
   http: [:inet6, port: {:system, "PORT"}],
-  url: [host: "tasks1.zombo.club", port: 80],
+  url: [host: "tasks2.zombo.club", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production

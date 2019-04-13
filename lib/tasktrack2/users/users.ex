@@ -49,6 +49,12 @@ defmodule Tasktrack2.Users do
       # preload: [:tasks, :manager, :underlings]
   end
 
+  def get_user_id_by_name(name) do
+    Repo.one from u in User,
+      where: u.name == ^name,
+      select: u.id
+  end
+
   def get_user_names() do
     query = from u in User,
             select: u.name

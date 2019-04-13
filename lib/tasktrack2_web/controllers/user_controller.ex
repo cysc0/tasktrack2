@@ -6,25 +6,29 @@ defmodule Tasktrack2Web.UserController do
 
   def index(conn, _params) do
     users = Users.list_users()
-    is_manager = Users.is_manager(conn.assigns.current_user.id)
-    render(conn, "index.html", users: users, is_manager: is_manager)
+    if conn.assigns.current_user == nil do
+      render(conn, "index.html", users: users, is_manager: false)
+    else
+      is_manager = Users.is_manager(conn.assigns.current_user.id)
+      render(conn, "index.html", users: users, is_manager: is_manager)
+    end
   end
 
   def new(conn, _params) do
-    is_manager = Users.is_manager(conn.assigns.current_user.id)
-    userId = conn.assigns.current_user.id
-    userList = [nil] ++ Users.get_other_user_names(userId)
+    userList = Users.get_user_names()
     changeset = Users.change_user(%User{})
-    render(conn, "new.html", is_manager: is_manager, changeset: changeset, userList: userList)
+    render(conn, "new.html", is_manager: false, changeset: changeset, userList: userList)
   end
 
   def create(conn, %{"user" => user_params}) do
+    IO.inspect(user_params)
     userList = Users.get_user_by_name(Map.get(user_params, "name"))
     if userList != nil do
       conn
       |> put_session(:user_id, userList.id)
       |> redirect(to: Routes.user_path(conn, :show, userList))
     else
+      user_params = Map.put(user_params, "manager_id", Users.get_user_id_by_name(Map.get(user_params, "manager_id")))
       case Users.create_user(user_params) do
         {:ok, user} ->
           conn
